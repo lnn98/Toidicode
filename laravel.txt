@@ -1,0 +1,80 @@
+Bài 2:
+    app: Chứa các thư mục, các tập tin php, thư viện, models.
+    Console: Chứa các tập tin định nghĩa các câu lệnh trên artisan.
+    Excerption:  Chứa các tập tin quản lý, điều hướng lỗi.
+    Http
+    Controllers : Chứa các controllers của project.
+    Middleware:  Chứa các tập tin lọc và ngăn chặn các requests.
+    Kernel.php:  Cấu hình, định nghĩa Middleware.
+    Providers: Chứ các providers thực hiện việc binding vào service container(ở phần nâng cao mình sẽ nói sau).
+    User.php: Là model User mà Laravel tự địn sẵn cho chúng ta.
+    bootstrap:Chứa tập tin điều hướng hệ thống.
+    config: Chứa mọi tập tin cấu hình của Laravel.
+    database: Chứa các thư mục tập tin vềdatabase.
+     migrations: Chứa các tập tin định nghĩa,khởi tạo và sửa bảng.
+     seeds: Chứa các tập tin định nghĩa dữ liệu insert(thêm) vào trong database.
+     factories: Chứa các tập tin định nghĩa các cột bảng dữ liệu để tạo ra các dữ liệu ảo.
+    public: Chứa các tập tin css, js, image.
+    index.php: Đây là tệp tin root của Laraver
+    resources: Chứa các views, ngôn ngữ(language) của project.
+    routes: Chứa các tập tin định nghĩa các router, xử lý điều hướng router bao gồm : web, api và console.
+    storage: Chứa các tập tin hệ thống cache, session, ...
+     tests: ...
+    vendor: Chứa các thư viện của composer.
+    .env: Là tập tin cấu hình chính của laravel như key app,database.
+    .env.example: Tệp tin cấu hình mẫu của laraver.
+    composer.json: tập tin của composer.
+     composer.lock: tập tin của composer.
+    package.js: Tập tin cấu hình của nodejs (chứa các package cần dùng cho projects).
+    gulpfile.js: Là tập tin gulp builder.
+    phpunit.xml: Là tập tin xml của phpunit dùng để testing project.
+    server.php: Là tập tin để artisan trỏ đến tạo server khi gõ lệnh php artisan serve .
+    artisan: Tập tin thực thi lệnh của Laravel.
+Bài 3:
+    Route trong Larvel cũng như các framework khác  đều có chức năng là định ra các dạng resquest(hsy còn gọi là url) định sẵn và cũng có các action( hành động) do chúng ta định nghĩa cho nó .
+    -Route::get tiếp nhận URL với phương thức GET ,cú pháp là Route::get($url, $action);
+    -Route::post tiếp nhận URL với phương thức POST, cú pháp Route::post($url, $action);
+    -Route::match cú pháp Route::match('phuong thuc', 'url', 'action');
+    -Route::any cú pháp là Route::any($url, $action);
+    -Route::resource()là một chức năng giúp chúng ta Xây dựng RESTful(websevice) một cách nhanh chóng cú pháp Route::resource('url', 'tencontroller', 'tuybien');có 2 cách để tạo là tạo bằng tay và dùng lệnh laravel
+    -Route::gorup() Route::group($attr, $handle);
+Bài 5:
+     Xác định thành phần biến truyền vào từ URL bằng cách đặt trong dấu {}
+
+        Route::get('thongtin/{tuoi}/{ten}', function($tuoi, $ten) {
+           return "Hello $ten , $tuoi tuổi";
+        });
+Bài 6:
+    -View Trong Laravel thì bắt buộc phải được nằm trong thư mục resources/views và phải có đuôi là .php hoặc .blade.php
+    -Để tạo các thư mục con cho view thì các bạn chỉ cần tạo một thư mục nữa trong resources/views thì larver cũng chấp nhận đó là view
+    -Gọi view trong route:
+    Route::get('duogndanroute', function(){
+        return view('tenview', 'dataneuco');
+    });
+    -Truyền dữ liêu cho view
+        +Dùng compact().
+            compact('tencuabientruyenvao')
+        +Dùng with().
+            view('tenview')->with('key', 'value');
+        +Dùng Mảng.
+            view('tenview', ['key' => 'value']);
+Bài 7:
+    -Tạo blade template trong Laravel.
+        +Đặt nó trong thư mục resources/views (view trong laravel)
+        +Và tên file của blade template phải kết thúc bằng .blade.php
+    -Sử dụng blade template.
+    -Template inheritance (kế thừa giao diện).
+        +Đầu tiên mình sẽ tạo ra 1 blade template có tên master.blade.php ở đường dẫn resoures\views\master.blade.php.
+        +Và sau đó mình tạo tiếp một file home.blade.php ở đường dẫn resoures\views\home.blade.php
+Bài 9:
+    Có 2 cách tạo Controller trong laravel
+        + Tạo bằng tay
+        + Tạo bằng lệnh có sẵn php artisan make:controller controllername;
+    -Sử dụng dụng các action trong Controllers.
+        +Để truyền tham số trong action Controllers thì nó hoàn toàn giống PHP thuần
+    Route::get('a/{name}/{age}','homecontroller@index')->where(['name'=>'[a-zA-Z]+','age'=>'[0-9]+']);
+Bài 10: Query Builder trong Laravel
+    - Cấu hình database.
+    - Sử dụng Query Builder.
+        + Lấy tất cả dữ liệu trong bảng"  DB::table('tablename')->get()
+        + Select cột trong bảng. DB::table('tablename')->select('columnfirst','columnsecond')->get();
